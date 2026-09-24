@@ -1,4 +1,4 @@
-module github.com/dagger/dagger/modules/wolfi
+module github.com/dagger/wolfi
 
 go 1.26.1
 

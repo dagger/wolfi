@@ -4,7 +4,7 @@
 // https://wolfi.dev
 package main
 
-import "github.com/dagger/dagger/modules/wolfi/internal/dagger"
+import "github.com/dagger/wolfi/internal/dagger"
 
 // A Wolfi Linux configuration
 type Wolfi struct{}
