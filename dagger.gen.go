@@ -17,7 +17,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.40.0"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/dagger/dagger/modules/wolfi/internal/dagger"
+	"github.com/dagger/wolfi/internal/dagger"
 
 	"github.com/dagger/querybuilder"
 )
