@@ -1,12 +1,5 @@
 name = "wolfi"
-engineVersion = "v0.21.9"
 
-[runtime]
-  source = "go"
-
-[[dependencies]]
-  name = "alpine"
-  source = "dagger.io/linux/alpine@main"
-
-[codegen]
-  automaticGitignore = false
+[entrypoint]
+  kind = "dang"
+  source = "./internal/dagger/entrypoint"

@@ -4,7 +4,10 @@
 // https://wolfi.dev
 package main
 
-import "github.com/dagger/wolfi/internal/dagger"
+import (
+	"github.com/dagger/wolfi/internal/dagger"
+	"github.com/dagger/wolfi/internal/dagger/clients/alpine"
+)
 
 // A Wolfi Linux configuration
 type Wolfi struct{}
@@ -28,8 +31,8 @@ func (w *Wolfi) Container(
 	// +optional
 	overlays []*dagger.Container,
 ) *dagger.Container {
-	config := dag.Alpine(dagger.AlpineOpts{
-		Distro:            dagger.AlpineDistroWolfi,
+	config := alpine.New(alpine.AlpineOpts{
+		Distro:            alpine.AlpineDistroWolfi,
 		Packages:          packages,
 		Arch:              arch,
 		ExtraRepositories: extraRepositories,

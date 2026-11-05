@@ -9,17 +9,22 @@ import (
 	"github.com/dagger/querybuilder"
 )
 
-func (r *Query) Wolfi() *Wolfi { // wolfi (../../../../:0:0)
+func (r *Query) Wolfi() *Wolfi { // wolfi (../../:0:0)
 	q := r.query.Select("wolfi")
 
 	return &Wolfi{
-		query: q,
+		query:     q,
+		refetchID: r.refetchID,
 	}
 }
 
 // A Wolfi Linux configuration
-type Wolfi struct { // wolfi (../../../../:0:0)
+type Wolfi struct { // wolfi (../../:0:0)
 	query *querybuilder.Selection
+	// refetchID is set when this object is built through a field marked
+	// @reevaluate: it fetches its ID on every use, so each use evaluates that
+	// field again.
+	refetchID bool
 
 	id *ID
 }
@@ -27,6 +32,9 @@ type Wolfi struct { // wolfi (../../../../:0:0)
 func (r *Wolfi) WithGraphQLQuery(q *querybuilder.Selection) *Wolfi {
 	return &Wolfi{
 		query: q,
+		// The query's origin is unknown: it may go through a field that
+		// must be reevaluated.
+		refetchID: true,
 	}
 }
 
@@ -71,9 +79,7 @@ func (r *Wolfi) Container(opts ...WolfiContainerOpts) *Container {
 		}
 	}
 
-	return &Container{
-		query: q,
-	}
+	return new(Container).WithGraphQLQuery(q)
 }
 
 // A unique identifier for this Wolfi.
@@ -86,7 +92,13 @@ func (r *Wolfi) ID(ctx context.Context) (ID, error) {
 	var response ID
 
 	q = q.Bind(&response)
-	return response, q.Execute(ctx)
+	if r.refetchID {
+		return response, q.Execute(ctx)
+	}
+	return memoizedID(ctx, r.query, func() (ID, error) {
+		err := q.Execute(ctx)
+		return response, err
+	})
 }
 
 // XXX_GraphQLType is an internal function. It returns the native GraphQL type name
@@ -121,6 +133,6 @@ func (r *Wolfi) UnmarshalJSON(bs []byte) error {
 	if err != nil {
 		return err
 	}
-	*r = Wolfi{query: selectNode(dag.query, id, "Wolfi")}
+	*r = Wolfi{query: selectNode(Connect().QueryBuilder(), id, "Wolfi")}
 	return nil
 }
