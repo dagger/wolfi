@@ -1,0 +1,37 @@
+"""
+Development checks for the wolfi module.
+"""
+type WolfiDev {
+  """
+  A container built with a package runs it, and is Wolfi.
+  """
+  containerCheck: Void @check {
+    let release = wolfi
+      .container(packages: ["bash"])
+      .withExec(["bash", "-c", "head -1 /etc/os-release"])
+      .stdout
+      .trimSpace
+    if (release != "ID=wolfi") {
+      raise "os-release starts with " + release + ", not ID=wolfi"
+    } else {
+      null
+    }
+  }
+
+  """
+  An overlay's files are layered on top of the packages.
+  """
+  overlayCheck: Void @check {
+    let overlay = container.withNewFile("/etc/overlay-marker", "from the overlay\n")
+    let marker = wolfi
+      .container(packages: ["busybox"], overlays: [overlay])
+      .withExec(["cat", "/etc/overlay-marker"])
+      .stdout
+      .trimSpace
+    if (marker != "from the overlay") {
+      raise "the overlay's file holds " + marker
+    } else {
+      null
+    }
+  }
+}
