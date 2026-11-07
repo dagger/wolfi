@@ -1,5 +1,9 @@
 name = "wolfi"
+engineVersion = "v1.0.0-beta.18"
 
-[entrypoint]
-  kind = "dang"
-  source = "./internal/dagger/entrypoint"
+[runtime]
+  source = "dang"
+
+[[dependencies]]
+  name = "alpine"
+  source = "github.com/dagger/alpine@7103ac92cfcdcc02c70612101ed230d73bf32334"
