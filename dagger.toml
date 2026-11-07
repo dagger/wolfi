@@ -10,7 +10,7 @@ module = "go-sdk"
 [sdks.go.scopes."."]
 is-module = true
 name = "wolfi"
-clients = ["github.com/dagger/alpine@ec2076f26edb34274e533cd526484a2d0baa5aa8"]
+clients = ["github.com/dagger/alpine@7103ac92cfcdcc02c70612101ed230d73bf32334"]
 
 [sdks.go.scopes.".".settings]
 dangEntrypoint = true

@@ -42,7 +42,7 @@ func Connect(connections ...*dagger.Client) *Client {
 	if len(connections) == 1 {
 		connection = connections[0]
 	}
-	q := querybuilder.Query().Client(dagger.ModuleGraphQLClient(connection, "github.com/dagger/alpine@ec2076f26edb34274e533cd526484a2d0baa5aa8", "ec2076f26edb34274e533cd526484a2d0baa5aa8"))
+	q := querybuilder.Query().Client(dagger.ModuleGraphQLClient(connection, "github.com/dagger/alpine@7103ac92cfcdcc02c70612101ed230d73bf32334", "7103ac92cfcdcc02c70612101ed230d73bf32334"))
 	return &Client{Query: &Query{query: q}}
 }
 
