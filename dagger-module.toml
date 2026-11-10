@@ -1,12 +1,9 @@
 name = "wolfi"
-engineVersion = "v0.21.9"
+engineVersion = "v1.0.0-beta.18"
 
 [runtime]
-  source = "go"
+  source = "dang"
 
 [[dependencies]]
   name = "alpine"
-  source = "dagger.io/linux/alpine@main"
-
-[codegen]
-  automaticGitignore = false
+  source = "github.com/dagger/alpine@e746b9763b6f4d004954deb35f66e693edfd854a"

@@ -1,2 +1,5 @@
-[modules.go]
-source = "dagger.io/go"
+# The wolfi-dev module holds this repository's checks: run them with
+# `dagger check`.
+[modules.wolfi-dev]
+source = ".dagger/modules/wolfi-dev"
+main = true
